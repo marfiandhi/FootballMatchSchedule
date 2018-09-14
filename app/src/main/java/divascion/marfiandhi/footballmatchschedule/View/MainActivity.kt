@@ -1,5 +1,6 @@
 package divascion.marfiandhi.footballmatchschedule.View
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -16,6 +17,9 @@ import divascion.marfiandhi.footballmatchschedule.Presenter.MainPresenter
 import divascion.marfiandhi.footballmatchschedule.Utils.invisible
 import divascion.marfiandhi.footballmatchschedule.Utils.visible
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.intentFor
+import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity(), MainView {
 
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity(), MainView {
     private val pastEvents = "eventspastleague.php"
     private val league = "English Premier League"
 
+       @SuppressLint("SimpleDateFormat")
        override fun onCreate(savedInstanceState: Bundle?) {
            super.onCreate(savedInstanceState)
            setContentView(R.layout.activity_main)
@@ -37,9 +42,32 @@ class MainActivity : AppCompatActivity(), MainView {
            recycler = findViewById(R.id.recycler)
            recycler.layoutManager = LinearLayoutManager(this)
 
+
            adapter = MainAdapter(this, events) {
-               val toast = Toast.makeText(applicationContext, "success", Toast.LENGTH_SHORT)
-               toast.show()
+               val date = SimpleDateFormat("EEE, dd MMM yyyy").format(it.date).toString()
+               startActivity(intentFor<EventDetailsActivity>(
+                       "date" to date,
+                       "home" to it.home,
+                       "away" to it.away,
+                       "homeScore" to it.homeScore.toString(),
+                       "awayScore" to it.awayScore.toString(),
+                       "homeGoal" to it.homeGoalDetails,
+                       "awayGoal" to it.awayGoalDetails,
+                       "homeShots" to it.homeShots.toString(),
+                       "awayShots" to it.awayShots.toString(),
+                       "homeGK" to it.homeGoalKeeper,
+                       "awayGK" to it.awayGoalKeeper,
+                       "homeDef" to it.homeDefense,
+                       "awayDef" to it.awayDefense,
+                       "homeMid" to it.homeMidfield,
+                       "awayMid" to it.awayMidfield,
+                       "homeFwd" to it.homeForward,
+                       "awayFwd" to it.awayForward,
+                       "homeSubst" to it.homeSubstitutes,
+                       "awaySubst" to it.awaySubstitutes,
+                       "idHome" to it.idHome,
+                       "idAway" to it.idAway))
+               intent.clearTask()
            }
            recycler.adapter = adapter
 
