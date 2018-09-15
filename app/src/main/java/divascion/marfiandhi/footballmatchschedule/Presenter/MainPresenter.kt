@@ -1,7 +1,7 @@
 package divascion.marfiandhi.footballmatchschedule.Presenter
 
 import com.google.gson.Gson
-import divascion.marfiandhi.footballmatchschedule.Model.Events.ApiRepository
+import divascion.marfiandhi.footballmatchschedule.Model.ApiRepository
 import divascion.marfiandhi.footballmatchschedule.Model.Events.ScheduleResponse
 import divascion.marfiandhi.footballmatchschedule.Model.Events.TheSportDBApi
 import divascion.marfiandhi.footballmatchschedule.View.MainView

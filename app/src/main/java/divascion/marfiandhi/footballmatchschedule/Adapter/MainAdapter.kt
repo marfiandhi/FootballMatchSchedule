@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import divascion.marfiandhi.footballmatchschedule.Model.Events.Schedule
 import divascion.marfiandhi.footballmatchschedule.R
-import kotlinx.android.synthetic.main.details_event.view.*
 import kotlinx.android.synthetic.main.item_list.view.*
 import java.text.SimpleDateFormat
 

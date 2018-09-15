@@ -2,13 +2,23 @@ package divascion.marfiandhi.footballmatchschedule.View
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.ImageView
+import com.google.gson.Gson
+import com.squareup.picasso.Picasso
+import divascion.marfiandhi.footballmatchschedule.Model.ApiRepository
+import divascion.marfiandhi.footballmatchschedule.Model.Team.Team
+import divascion.marfiandhi.footballmatchschedule.Presenter.EventDetailsPresenter
 import divascion.marfiandhi.footballmatchschedule.R
 import kotlinx.android.synthetic.main.details_event.*
 
 /**
  * Created by Marfiandhi on 9/14/2018.
  */
-class EventDetailsActivity: AppCompatActivity() {
+class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
+
+    private var teams: MutableList<Team> = mutableListOf()
+
+    private lateinit var presenter: EventDetailsPresenter
 
     private var date: String? = null
 
@@ -42,25 +52,31 @@ class EventDetailsActivity: AppCompatActivity() {
         date = intent.getStringExtra("date")
 
         mHome = intent.getStringExtra("home")
-        mHomeScore = intent.getStringExtra("homeScore")
-        mHomeGoal = intent.getStringExtra("homeGoal")
-        mHomeShots = intent.getStringExtra("homeShots")
-        mHomeGK = intent.getStringExtra("homeGK")
-        mHomeDef = intent.getStringExtra("homeDef")
-        mHomeMid = intent.getStringExtra("homeMid")
-        mHomeFwd = intent.getStringExtra("homeFwd")
-        mHomeSubst = intent.getStringExtra("homeSubst")
+        mAway = intent.getStringExtra("away")
+
+        if(intent.getStringExtra("homeGoal")!=null) {
+            mHomeScore = intent.getStringExtra("homeScore")
+            mHomeGoal = intent.getStringExtra("homeGoal")
+            mHomeShots = intent.getStringExtra("homeShots")
+            mHomeGK = intent.getStringExtra("homeGK")
+            mHomeDef = intent.getStringExtra("homeDef")
+            mHomeMid = intent.getStringExtra("homeMid")
+            mHomeFwd = intent.getStringExtra("homeFwd")
+            mHomeSubst = intent.getStringExtra("homeSubst")
+
+            mAwayScore = intent.getStringExtra("awayScore")
+            mAwayGoal = intent.getStringExtra("awayGoal")
+            mAwayShots = intent.getStringExtra("awayShots")
+            mAwayGK = intent.getStringExtra("awayGK")
+            mAwayDef = intent.getStringExtra("awayDef")
+            mAwayMid = intent.getStringExtra("awayMid")
+            mAwayFwd = intent.getStringExtra("awayFwd")
+            mAwaySubst = intent.getStringExtra("awaySubst")
+
+        }
+
         mHomeId = intent.getStringExtra("idHome")
 
-        mAway = intent.getStringExtra("away")
-        mAwayScore = intent.getStringExtra("awayScore")
-        mAwayGoal = intent.getStringExtra("awayGoal")
-        mAwayShots = intent.getStringExtra("awayShots")
-        mAwayGK = intent.getStringExtra("awayGK")
-        mAwayDef = intent.getStringExtra("awayDef")
-        mAwayMid = intent.getStringExtra("awayMid")
-        mAwayFwd = intent.getStringExtra("awayFwd")
-        mAwaySubst = intent.getStringExtra("awaySubst")
         mAwayId = intent.getStringExtra("idAway")
 
         setContentView(R.layout.details_event)
@@ -68,6 +84,8 @@ class EventDetailsActivity: AppCompatActivity() {
         detailsDate.text = date
 
         homeName.text = mHome
+        awayName.text = mAway
+
         homeScore.text = mHomeScore
         homeGoals.text = mHomeGoal
         homeShots.text = mHomeShots
@@ -77,7 +95,6 @@ class EventDetailsActivity: AppCompatActivity() {
         homeFwd.text = mHomeFwd
         homeSubst.text = mHomeSubst
 
-        awayName.text = mAway
         awayScore.text = mAwayScore
         awayGoals.text = mAwayGoal
         awayShots.text = mAwayShots
@@ -87,7 +104,26 @@ class EventDetailsActivity: AppCompatActivity() {
         awayFwd.text = mAwayFwd
         awaySubst.text = mAwaySubst
 
-        // ERROR PADA SAAT ACTIVITY NEXT EVENTS, BUAT IF ELSE TEXTNYA
+        val request = ApiRepository()
+        val gson = Gson()
+        presenter = EventDetailsPresenter(this, request, gson)
+        presenter.getDetails(mHomeId)
 
+        presenter.getDetails(mAwayId)
+
+    }
+
+    private fun loadBadge(team: Team, teamBadge: ImageView) {
+        Picasso.get().load(team.teamBadge).into(teamBadge)
+    }
+
+    override fun showTeamDetails(data: List<Team>, name: String) {
+        teams.clear()
+        teams.addAll(data)
+        if(name==mHomeId) {
+            loadBadge(teams[0], homeImg)
+        } else {
+            loadBadge(teams[0], awayImg)
+        }
     }
 }

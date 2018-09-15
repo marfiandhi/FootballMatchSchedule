@@ -7,11 +7,10 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.Toast
 import com.google.gson.Gson
 import divascion.marfiandhi.footballmatchschedule.*
 import divascion.marfiandhi.footballmatchschedule.Adapter.MainAdapter
-import divascion.marfiandhi.footballmatchschedule.Model.Events.ApiRepository
+import divascion.marfiandhi.footballmatchschedule.Model.ApiRepository
 import divascion.marfiandhi.footballmatchschedule.Model.Events.Schedule
 import divascion.marfiandhi.footballmatchschedule.Presenter.MainPresenter
 import divascion.marfiandhi.footballmatchschedule.Utils.invisible
@@ -32,7 +31,6 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private val nextEvents = "eventsnextleague.php"
     private val pastEvents = "eventspastleague.php"
-    private val league = "English Premier League"
 
        @SuppressLint("SimpleDateFormat")
        override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +39,6 @@ class MainActivity : AppCompatActivity(), MainView {
 
            recycler = findViewById(R.id.recycler)
            recycler.layoutManager = LinearLayoutManager(this)
-
 
            adapter = MainAdapter(this, events) {
                val date = SimpleDateFormat("EEE, dd MMM yyyy").format(it.date).toString()
