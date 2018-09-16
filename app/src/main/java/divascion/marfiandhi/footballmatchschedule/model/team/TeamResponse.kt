@@ -1,4 +1,4 @@
-package divascion.marfiandhi.footballmatchschedule.Model.Team
+package divascion.marfiandhi.footballmatchschedule.model.team
 
 /**
  * Created by Marfiandhi on 9/15/2018.

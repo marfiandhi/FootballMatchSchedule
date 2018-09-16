@@ -1,5 +1,6 @@
 package divascion.marfiandhi.footballmatchschedule.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
@@ -9,7 +10,9 @@ import divascion.marfiandhi.footballmatchschedule.model.ApiRepository
 import divascion.marfiandhi.footballmatchschedule.model.team.Team
 import divascion.marfiandhi.footballmatchschedule.presenter.EventDetailsPresenter
 import divascion.marfiandhi.footballmatchschedule.R
+import divascion.marfiandhi.footballmatchschedule.model.events.Schedule
 import kotlinx.android.synthetic.main.details_event.*
+import java.text.SimpleDateFormat
 
 /**
  * Created by Marfiandhi on 9/14/2018.
@@ -20,89 +23,46 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
 
     private lateinit var presenter: EventDetailsPresenter
 
-    private var date: String? = null
-
-    private var mHome: String = ""
-    private var mHomeScore: String = ""
-    private var mHomeGoal: String = ""
-    private var mHomeShots: String = ""
-    private var mHomeGK: String = ""
-    private var mHomeDef: String = ""
-    private var mHomeMid: String = ""
-    private var mHomeFwd: String = ""
-    private var mHomeSubst: String = ""
     private var mHomeId: String = ""
-
-    private var mAway: String = ""
-    private var mAwayScore: String = ""
-    private var mAwayGoal: String = ""
-    private var mAwayShots: String = ""
-    private var mAwayGK: String = ""
-    private var mAwayDef: String = ""
-    private var mAwayMid: String = ""
-    private var mAwayFwd: String = ""
-    private var mAwaySubst: String = ""
     private var mAwayId: String = ""
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intent = intent
+        val item = intent.getParcelableExtra<Schedule>("extra_item")
 
-        date = intent.getStringExtra("date")
+        val date = SimpleDateFormat("EEE, dd MMM yyyy").format(item.date).toString()
 
-        mHome = intent.getStringExtra("home")
-        mAway = intent.getStringExtra("away")
-
-        if(intent.getStringExtra("homeGoal")!=null) {
-            mHomeScore = intent.getStringExtra("homeScore")
-            mHomeGoal = intent.getStringExtra("homeGoal")
-            mHomeShots = intent.getStringExtra("homeShots")
-            mHomeGK = intent.getStringExtra("homeGK")
-            mHomeDef = intent.getStringExtra("homeDef")
-            mHomeMid = intent.getStringExtra("homeMid")
-            mHomeFwd = intent.getStringExtra("homeFwd")
-            mHomeSubst = intent.getStringExtra("homeSubst")
-
-            mAwayScore = intent.getStringExtra("awayScore")
-            mAwayGoal = intent.getStringExtra("awayGoal")
-            mAwayShots = intent.getStringExtra("awayShots")
-            mAwayGK = intent.getStringExtra("awayGK")
-            mAwayDef = intent.getStringExtra("awayDef")
-            mAwayMid = intent.getStringExtra("awayMid")
-            mAwayFwd = intent.getStringExtra("awayFwd")
-            mAwaySubst = intent.getStringExtra("awaySubst")
-
-        }
-
-        mHomeId = intent.getStringExtra("idHome")
-
-        mAwayId = intent.getStringExtra("idAway")
+        mHomeId = item.idHome!!
+        mAwayId = item.idAway!!
 
         setContentView(R.layout.details_event)
 
         detailsDate.text = date
 
-        homeName.text = mHome
-        awayName.text = mAway
+        homeName.text = item.home
+        awayName.text = item.away
 
-        homeScore.text = mHomeScore
-        homeGoals.text = mHomeGoal
-        homeShots.text = mHomeShots
-        homeGK.text = mHomeGK
-        homeDef.text = mHomeDef
-        homeMid.text = mHomeMid
-        homeFwd.text = mHomeFwd
-        homeSubst.text = mHomeSubst
+        if(item.homeScore!=null){
+            homeScore.text = item.homeScore.toString()
+            homeGoals.text = item.homeGoalDetails
+            homeShots.text = item.homeShots.toString()
+            homeGK.text = item.homeGoalKeeper
+            homeDef.text = item.homeDefense
+            homeMid.text = item.homeMidfield
+            homeFwd.text = item.homeForward
+            homeSubst.text = item.homeSubstitutes
 
-        awayScore.text = mAwayScore
-        awayGoals.text = mAwayGoal
-        awayShots.text = mAwayShots
-        awayGK.text = mAwayGK
-        awayDef.text = mAwayDef
-        awayMid.text = mAwayMid
-        awayFwd.text = mAwayFwd
-        awaySubst.text = mAwaySubst
+            awayScore.text = item.awayScore.toString()
+            awayGoals.text = item.awayGoalDetails
+            awayShots.text = item.awayShots.toString()
+            awayGK.text = item.awayGoalKeeper
+            awayDef.text = item.awayDefense
+            awayMid.text = item.awayMidfield
+            awayFwd.text = item.awayForward
+            awaySubst.text = item.awaySubstitutes
+        }
 
         val request = ApiRepository()
         val gson = Gson()
