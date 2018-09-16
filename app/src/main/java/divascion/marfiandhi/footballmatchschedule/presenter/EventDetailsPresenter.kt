@@ -1,10 +1,10 @@
-package divascion.marfiandhi.footballmatchschedule.Presenter
+package divascion.marfiandhi.footballmatchschedule.presenter
 
 import com.google.gson.Gson
-import divascion.marfiandhi.footballmatchschedule.Model.ApiRepository
-import divascion.marfiandhi.footballmatchschedule.Model.Team.EPLTeamDetailsApi
-import divascion.marfiandhi.footballmatchschedule.Model.Team.TeamResponse
-import divascion.marfiandhi.footballmatchschedule.View.EventDetailsView
+import divascion.marfiandhi.footballmatchschedule.model.ApiRepository
+import divascion.marfiandhi.footballmatchschedule.model.team.EPLTeamDetailsApi
+import divascion.marfiandhi.footballmatchschedule.model.team.TeamResponse
+import divascion.marfiandhi.footballmatchschedule.view.EventDetailsView
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 

@@ -1,13 +1,13 @@
-package divascion.marfiandhi.footballmatchschedule.View
+package divascion.marfiandhi.footballmatchschedule.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import divascion.marfiandhi.footballmatchschedule.Model.ApiRepository
-import divascion.marfiandhi.footballmatchschedule.Model.Team.Team
-import divascion.marfiandhi.footballmatchschedule.Presenter.EventDetailsPresenter
+import divascion.marfiandhi.footballmatchschedule.model.ApiRepository
+import divascion.marfiandhi.footballmatchschedule.model.team.Team
+import divascion.marfiandhi.footballmatchschedule.presenter.EventDetailsPresenter
 import divascion.marfiandhi.footballmatchschedule.R
 import kotlinx.android.synthetic.main.details_event.*
 

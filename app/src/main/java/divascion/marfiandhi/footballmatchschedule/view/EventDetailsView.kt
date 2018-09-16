@@ -1,6 +1,6 @@
-package divascion.marfiandhi.footballmatchschedule.View
+package divascion.marfiandhi.footballmatchschedule.view
 
-import divascion.marfiandhi.footballmatchschedule.Model.Team.Team
+import divascion.marfiandhi.footballmatchschedule.model.team.Team
 
 /**
  * Created by Marfiandhi on 9/15/2018.

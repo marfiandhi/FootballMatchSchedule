@@ -1,4 +1,4 @@
-package divascion.marfiandhi.footballmatchschedule.Model.Events
+package divascion.marfiandhi.footballmatchschedule.model.events
 
 import divascion.marfiandhi.footballmatchschedule.BuildConfig
 

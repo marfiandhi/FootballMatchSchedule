@@ -1,4 +1,4 @@
-package divascion.marfiandhi.footballmatchschedule.Adapter
+package divascion.marfiandhi.footballmatchschedule.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import divascion.marfiandhi.footballmatchschedule.Model.Events.Schedule
+import divascion.marfiandhi.footballmatchschedule.model.events.Schedule
 import divascion.marfiandhi.footballmatchschedule.R
 import kotlinx.android.synthetic.main.item_list.view.*
 import java.text.SimpleDateFormat

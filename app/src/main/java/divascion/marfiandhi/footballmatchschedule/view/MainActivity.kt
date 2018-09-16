@@ -1,4 +1,4 @@
-package divascion.marfiandhi.footballmatchschedule.View
+package divascion.marfiandhi.footballmatchschedule.view
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -9,12 +9,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.google.gson.Gson
 import divascion.marfiandhi.footballmatchschedule.*
-import divascion.marfiandhi.footballmatchschedule.Adapter.MainAdapter
-import divascion.marfiandhi.footballmatchschedule.Model.ApiRepository
-import divascion.marfiandhi.footballmatchschedule.Model.Events.Schedule
-import divascion.marfiandhi.footballmatchschedule.Presenter.MainPresenter
-import divascion.marfiandhi.footballmatchschedule.Utils.invisible
-import divascion.marfiandhi.footballmatchschedule.Utils.visible
+import divascion.marfiandhi.footballmatchschedule.adapter.MainAdapter
+import divascion.marfiandhi.footballmatchschedule.model.ApiRepository
+import divascion.marfiandhi.footballmatchschedule.model.events.Schedule
+import divascion.marfiandhi.footballmatchschedule.presenter.MainPresenter
+import divascion.marfiandhi.footballmatchschedule.utils.invisible
+import divascion.marfiandhi.footballmatchschedule.utils.visible
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.intentFor

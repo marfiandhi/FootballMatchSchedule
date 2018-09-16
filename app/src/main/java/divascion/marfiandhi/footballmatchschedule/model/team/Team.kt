@@ -1,4 +1,4 @@
-package divascion.marfiandhi.footballmatchschedule.Model.Team
+package divascion.marfiandhi.footballmatchschedule.model.team
 
 import com.google.gson.annotations.SerializedName
 

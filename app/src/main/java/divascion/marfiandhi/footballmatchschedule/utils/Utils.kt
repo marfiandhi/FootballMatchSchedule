@@ -1,4 +1,4 @@
-package divascion.marfiandhi.footballmatchschedule.Utils
+package divascion.marfiandhi.footballmatchschedule.utils
 
 import android.view.View
 

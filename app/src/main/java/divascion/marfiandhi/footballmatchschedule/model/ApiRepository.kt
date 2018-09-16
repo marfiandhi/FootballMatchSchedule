@@ -1,4 +1,4 @@
-package divascion.marfiandhi.footballmatchschedule.Model
+package divascion.marfiandhi.footballmatchschedule.model
 
 import java.net.URL
 
