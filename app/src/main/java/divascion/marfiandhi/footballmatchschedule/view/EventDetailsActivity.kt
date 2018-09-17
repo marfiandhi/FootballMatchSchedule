@@ -26,7 +26,7 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
     private var mHomeId: String = ""
     private var mAwayId: String = ""
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,18 +45,18 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
         awayName.text = item.away
 
         if(item.homeScore!=null){
-            homeScore.text = item.homeScore.toString()
+            homeScore.text = item.homeScore.toString()+""
             homeGoals.text = item.homeGoalDetails
-            homeShots.text = item.homeShots.toString()
+            homeShots.text = item.homeShots.toString()+""
             homeGK.text = item.homeGoalKeeper
             homeDef.text = item.homeDefense
             homeMid.text = item.homeMidfield
             homeFwd.text = item.homeForward
             homeSubst.text = item.homeSubstitutes
 
-            awayScore.text = item.awayScore.toString()
+            awayScore.text = item.awayScore.toString()+""
             awayGoals.text = item.awayGoalDetails
-            awayShots.text = item.awayShots.toString()
+            awayShots.text = item.awayShots.toString()+""
             awayGK.text = item.awayGoalKeeper
             awayDef.text = item.awayDefense
             awayMid.text = item.awayMidfield
