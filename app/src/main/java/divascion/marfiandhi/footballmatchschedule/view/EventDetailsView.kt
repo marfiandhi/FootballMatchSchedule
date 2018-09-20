@@ -7,4 +7,5 @@ import divascion.marfiandhi.footballmatchschedule.model.team.Team
  */
 interface EventDetailsView {
     fun showTeamDetails(data: List<Team>, name: String)
+    fun hideLoading()
 }

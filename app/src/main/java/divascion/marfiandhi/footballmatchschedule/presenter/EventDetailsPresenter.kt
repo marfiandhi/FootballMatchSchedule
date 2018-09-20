@@ -22,6 +22,7 @@ class EventDetailsPresenter(private val view: EventDetailsView,
             )
 
             uiThread {
+                view.hideLoading()
                 view.showTeamDetails(data.teams, team)
             }
         }

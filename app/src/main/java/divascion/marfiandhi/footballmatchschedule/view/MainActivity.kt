@@ -3,6 +3,7 @@ package divascion.marfiandhi.footballmatchschedule.view
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,22 +18,26 @@ import divascion.marfiandhi.footballmatchschedule.utils.visible
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.support.v4.onRefresh
 
 class MainActivity : AppCompatActivity(), MainView {
 
     private var events: MutableList<Schedule> = mutableListOf()
 
     private lateinit var recycler: RecyclerView
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     private lateinit var presenter: MainPresenter
     private lateinit var adapter : MainAdapter
 
     private val nextEvents = "eventsnextleague.php"
     private val pastEvents = "eventspastleague.php"
+    private lateinit var presenterEvents: String
 
        override fun onCreate(savedInstanceState: Bundle?) {
            super.onCreate(savedInstanceState)
            setContentView(R.layout.activity_main)
+           swipeRefresh = mainSwipeRefresh
 
            recycler = findViewById(R.id.recycler)
            recycler.layoutManager = LinearLayoutManager(this)
@@ -47,7 +52,8 @@ class MainActivity : AppCompatActivity(), MainView {
            val request = ApiRepository()
            val gson = Gson()
            presenter = MainPresenter(this, request, gson)
-           presenter.getSchedule(pastEvents)
+           presenterEvents = pastEvents
+           presenter.getSchedule(presenterEvents)
 
            prevMatch.setOnClickListener{
                txtPrevMatch.setTextColor(Color.parseColor("#c90000"))
@@ -56,7 +62,11 @@ class MainActivity : AppCompatActivity(), MainView {
                txtNextMatch.textSize = 8F
                imgPrevMatch.setColorFilter(ContextCompat.getColor(this, R.color.red))
                imgNextMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
-               presenter.getSchedule(pastEvents)
+               imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.black))
+               txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.black))
+               txtFavorite.textSize = 8f
+               presenterEvents = pastEvents
+               presenter.getSchedule(presenterEvents)
            }
 
            nextMatch.setOnClickListener{
@@ -66,7 +76,26 @@ class MainActivity : AppCompatActivity(), MainView {
                txtPrevMatch.textSize = 8F
                imgNextMatch.setColorFilter(ContextCompat.getColor(this, R.color.red))
                imgPrevMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
-               presenter.getSchedule(nextEvents)
+               imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.black))
+               txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.black))
+               txtFavorite.textSize = 8f
+               presenterEvents = nextEvents
+               presenter.getSchedule(presenterEvents)
+           }
+
+           favorite.setOnClickListener{
+               txtPrevMatch.setTextColor(Color.parseColor("#000000"))
+               txtPrevMatch.textSize = 8F
+               txtNextMatch.setTextColor(Color.parseColor("#000000"))
+               txtNextMatch.textSize = 8F
+               imgPrevMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
+               imgNextMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
+               imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.red))
+               txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.red))
+               txtFavorite.textSize = 12f
+           }
+           swipeRefresh.onRefresh {
+               presenter.getSchedule(presenterEvents)
            }
     }
 
@@ -76,6 +105,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun hideLoading() {
         progressBars.invisible()
+        swipeRefresh.isRefreshing = false
     }
 
     override fun showSchedule(data: List<Schedule>) {
