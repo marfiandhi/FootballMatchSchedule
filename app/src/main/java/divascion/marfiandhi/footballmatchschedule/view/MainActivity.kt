@@ -9,26 +9,35 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.google.gson.Gson
 import divascion.marfiandhi.footballmatchschedule.*
+import divascion.marfiandhi.footballmatchschedule.adapter.FavoriteEventsAdapter
 import divascion.marfiandhi.footballmatchschedule.adapter.MainAdapter
+import divascion.marfiandhi.footballmatchschedule.database.database
 import divascion.marfiandhi.footballmatchschedule.model.ApiRepository
 import divascion.marfiandhi.footballmatchschedule.model.events.Schedule
+import divascion.marfiandhi.footballmatchschedule.model.favorite.Favorite
 import divascion.marfiandhi.footballmatchschedule.presenter.MainPresenter
 import divascion.marfiandhi.footballmatchschedule.utils.invisible
 import divascion.marfiandhi.footballmatchschedule.utils.visible
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.select
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.support.v4.onRefresh
 
 class MainActivity : AppCompatActivity(), MainView {
 
     private var events: MutableList<Schedule> = mutableListOf()
+    private var favorites: MutableList<Favorite> = mutableListOf()
+
+    private var checkFavorite = false
 
     private lateinit var recycler: RecyclerView
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
     private lateinit var presenter: MainPresenter
     private lateinit var adapter : MainAdapter
+    private lateinit var adapterFavorite : FavoriteEventsAdapter
 
     private val nextEvents = "eventsnextleague.php"
     private val pastEvents = "eventspastleague.php"
@@ -44,9 +53,18 @@ class MainActivity : AppCompatActivity(), MainView {
 
            adapter = MainAdapter(this, events) {
                startActivity(intentFor<EventDetailsActivity>(
-                       "extra_item" to it))
+                       "extra_item" to it,
+                       "boolean" to true))
                intent.clearTask()
            }
+
+           adapterFavorite = FavoriteEventsAdapter(this, favorites) {
+               startActivity(intentFor<EventDetailsActivity>(
+                       "extra_item_favorite" to it,
+                       "boolean" to false))
+               intent.clearTask()
+           }
+
            recycler.adapter = adapter
 
            val request = ApiRepository()
@@ -66,6 +84,8 @@ class MainActivity : AppCompatActivity(), MainView {
                txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.black))
                txtFavorite.textSize = 8f
                presenterEvents = pastEvents
+               recycler.adapter = adapter
+               checkFavorite = false
                presenter.getSchedule(presenterEvents)
            }
 
@@ -80,6 +100,8 @@ class MainActivity : AppCompatActivity(), MainView {
                txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.black))
                txtFavorite.textSize = 8f
                presenterEvents = nextEvents
+               recycler.adapter = adapter
+               checkFavorite = false
                presenter.getSchedule(presenterEvents)
            }
 
@@ -93,9 +115,20 @@ class MainActivity : AppCompatActivity(), MainView {
                imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.red))
                txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.red))
                txtFavorite.textSize = 12f
+               recycler.adapter = adapterFavorite
+               checkFavorite = true
+               favorites.clear()
+               showFavorite()
            }
+
            swipeRefresh.onRefresh {
-               presenter.getSchedule(presenterEvents)
+               if(checkFavorite) {
+                   recycler.adapter = adapterFavorite
+                   favorites.clear()
+                   showFavorite()
+               } else {
+                   presenter.getSchedule(presenterEvents)
+               }
            }
     }
 
@@ -114,5 +147,14 @@ class MainActivity : AppCompatActivity(), MainView {
         adapter.notifyDataSetChanged()
     }
 
-}
+    private fun showFavorite() {
+        database.use {
+            swipeRefresh.isRefreshing = false
+            val result = select(Favorite.TABLE_FAVORITE)
+            val favorite = result.parseList(classParser<Favorite>())
+            favorites.addAll(favorite)
+            adapter.notifyDataSetChanged()
+        }
+    }
 
+}

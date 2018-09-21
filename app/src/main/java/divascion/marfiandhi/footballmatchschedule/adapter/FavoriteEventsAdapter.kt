@@ -16,7 +16,7 @@ class FavoriteEventsAdapter(private val context: Context, private val favorite: 
     : RecyclerView.Adapter<FavoriteEventsAdapter.FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder =
-            FavoriteViewHolder(LayoutInflater.from(context).inflate(R.layout.item_list, parent, false))
+        FavoriteViewHolder(LayoutInflater.from(context).inflate(R.layout.item_list, parent, false))
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         holder.bindItem(favorite[position], listener)
@@ -26,9 +26,9 @@ class FavoriteEventsAdapter(private val context: Context, private val favorite: 
 
     class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun bindItem(favorite: Favorite, listener: (Favorite) -> Unit) {
-            itemView.TeamA.text = favorite.homeName
-            itemView.TeamB.text = favorite.awayName
-            if(favorite.homeScore!=null){
+            itemView.TeamA.text = favorite.home
+            itemView.TeamB.text = favorite.away
+            if(favorite.homeScore!="null"){
                 itemView.scoreTeamA.text = favorite.homeScore.toString()
                 itemView.scoreTeamB.text = favorite.awayScore.toString()
             } else {

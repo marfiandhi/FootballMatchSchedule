@@ -7,7 +7,7 @@ import org.jetbrains.anko.db.*
 /**
  * Created by Marfiandhi on 9/19/2018.
  */
-class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeam.db", null, 1) {
+class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteEvent.db", null, 1) {
     companion object {
         private var instance: MyDatabaseOpenHelper? = null
 
@@ -29,7 +29,21 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
                 "AWAY_ID" to TEXT + UNIQUE,
                 "AWAY_NAME" to TEXT,
                 "AWAY_SCORE" to TEXT,
-                "DATE" to TEXT)
+                "DATE" to TEXT,
+                "HOME_GOAL_DETAIL" to TEXT,
+                "AWAY_GOAL_DETAIL" to TEXT,
+                "HOME_SHOT" to TEXT,
+                "AWAY_SHOT" to TEXT,
+                "HOME_GOAL_KEEPER" to TEXT,
+                "HOME_DEFENSE" to TEXT,
+                "HOME_MIDFIELD" to TEXT,
+                "HOME_FORWARD" to TEXT,
+                "HOME_SUBSTITUTES" to TEXT,
+                "AWAY_GOAL_KEEPER" to TEXT,
+                "AWAY_DEFENSE" to TEXT,
+                "AWAY_MIDFIELD" to TEXT,
+                "AWAY_FORWARD" to TEXT,
+                "AWAY_SUBSTITUTES" to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
