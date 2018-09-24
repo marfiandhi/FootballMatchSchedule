@@ -3,8 +3,6 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="api_next_15_events">eventsnextleague.php</string>
-    <string name="api_prev_15_events">eventspastleague.php</string>
     <string name="favorite">Favorite</string>
     <string name="next_match">Next Match</string>
     <string name="prev_match">Prev. Match</string>
