@@ -19,6 +19,7 @@ import divascion.marfiandhi.footballmatchschedule.presenter.MainPresenter
 import divascion.marfiandhi.footballmatchschedule.utils.invisible
 import divascion.marfiandhi.footballmatchschedule.utils.visible
 import kotlinx.android.synthetic.main.activity_main.*
+import divascion.marfiandhi.footballmatchschedule.R.string.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
@@ -39,8 +40,8 @@ class MainActivity : AppCompatActivity(), MainView {
     private lateinit var adapter : MainAdapter
     private lateinit var adapterFavorite : FavoriteEventsAdapter
 
-    private val nextEvents = "eventsnextleague.php"
-    private val pastEvents = "eventspastleague.php"
+    private val nextEvents: String = api_next_15_events.toString()
+    private val pastEvents: String = api_prev_15_events.toString()
     private lateinit var presenterEvents: String
 
        override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/lightGrey"
     android:gravity="center_horizontal"
@@ -38,13 +39,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="68dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/rounded_white"
         android:gravity="bottom|center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:id="@+id/prevMatch"
@@ -59,7 +62,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="3"
                 android:tint="@color/red"
-                app:srcCompat="@mipmap/ic_trophy" />
+                app:srcCompat="@mipmap/ic_trophy"
+                tools:ignore="NestedWeights"
+                android:contentDescription="@string/prev_match" />
 
             <TextView
                 android:id="@+id/txtPrevMatch"
@@ -67,8 +72,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textSize="12sp"
-                android:text="Prev. Match"
+                android:textSize="16sp"
+                android:text="@string/prev_match"
                 android:textColor="@color/red"/>
 
         </LinearLayout>
@@ -84,9 +89,11 @@
                 android:id="@+id/imgNextMatch"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 app:srcCompat="@mipmap/ic_next_match"
-                android:tint="@color/black"/>
+                android:tint="@color/black"
+                tools:ignore="NestedWeights"
+                android:contentDescription="@string/next_match" />
 
             <TextView
                 android:id="@+id/txtNextMatch"
@@ -94,8 +101,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                android:textSize="8sp"
-                android:text="Next Match"
+                android:textSize="12sp"
+                android:text="@string/next_match"
                 android:textColor="@color/black"/>
 
         </LinearLayout>
@@ -112,19 +119,21 @@
                 android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:tint="@color/black"
-                app:srcCompat="@mipmap/ic_favorite" />
+                app:srcCompat="@mipmap/ic_favorite"
+                tools:ignore="NestedWeights"
+                android:contentDescription="@string/favorite" />
 
             <TextView
                 android:id="@+id/txtFavorite"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:textSize="8sp"
-                android:text="Favorite"
+                android:textSize="12sp"
+                android:text="@string/favorite"
                 android:textAlignment="center"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
         </LinearLayout>
 

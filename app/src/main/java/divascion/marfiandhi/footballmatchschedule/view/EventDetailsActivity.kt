@@ -69,8 +69,8 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
 
             val date = SimpleDateFormat("EEE, dd MMM yyyy").format(item.date).toString()
 
-            mHomeId = item.idHome!!
-            mAwayId = item.idAway!!
+            mHomeId = item.idHome.toString()
+            mAwayId = item.idAway.toString()
 
             setContentView(R.layout.details_event)
 
@@ -118,8 +118,8 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
 
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-            mHomeId = itemFavorite.idHome!!
-            mAwayId = itemFavorite.idAway!!
+            mHomeId = itemFavorite.idHome.toString()
+            mAwayId = itemFavorite.idAway.toString()
 
             setContentView(R.layout.details_event)
 

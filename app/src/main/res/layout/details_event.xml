@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textColor="@color/red"
-                    android:text="Sat, 07 Mar 1998"/>
+                    android:text="@string/example_date"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -39,7 +39,8 @@
                         android:id="@+id/homeImg"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"/>
+                        android:layout_weight="3"
+                        android:contentDescription="@string/home_image" />
 
                     <TextView
                         android:id="@+id/homeScore"
@@ -59,7 +60,7 @@
                         android:textSize="18sp"
                         android:textColor="@color/black"
                         android:layout_marginTop="20dp"
-                        android:text="vs"/>
+                        android:text="@string/vs"/>
 
                     <TextView
                         android:id="@+id/awayScore"
@@ -75,7 +76,8 @@
                         android:id="@+id/awayImg"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"/>
+                        android:layout_weight="3"
+                        android:contentDescription="@string/away_image" />
 
                 </LinearLayout>
 
@@ -94,7 +96,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textAlignment="center"
-                        android:text="Manchester United"/>
+                        android:text="@string/example_home_name"/>
 
                     <View
                         android:layout_width="0dp"
@@ -110,7 +112,7 @@
                         android:textColor="@color/red"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:text="Manchester City"/>
+                        android:text="@string/example_away_name"/>
 
                 </LinearLayout>
 
@@ -139,7 +141,7 @@
                         android:layout_weight="1"
                         android:textAlignment="center"
                         android:textColor="@color/red"
-                        android:text="Goals"/>
+                        android:text="@string/goals"/>
 
                     <TextView
                         android:id="@+id/awayGoals"
@@ -172,7 +174,7 @@
                         android:layout_weight="1"
                         android:textAlignment="center"
                         android:textColor="@color/red"
-                        android:text="Shots"/>
+                        android:text="@string/shots"/>
 
                     <TextView
                         android:id="@+id/awayShots"
@@ -197,7 +199,7 @@
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:text="Lineups"/>
+                    android:text="@string/lineups"/>
 
                 <LinearLayout
                     android:layout_marginTop="8dp"
@@ -219,7 +221,7 @@
                         android:layout_weight="1"
                         android:textAlignment="center"
                         android:textColor="@color/red"
-                        android:text="Goal Keeper"/>
+                        android:text="@string/goal_keeper"/>
 
                     <TextView
                         android:id="@+id/awayGK"
@@ -251,7 +253,7 @@
                         android:layout_weight="1"
                         android:textAlignment="center"
                         android:textColor="@color/red"
-                        android:text="Defense"/>
+                        android:text="@string/defense"/>
 
                     <TextView
                         android:id="@+id/awayDef"
@@ -283,7 +285,7 @@
                         android:layout_weight="1"
                         android:textAlignment="center"
                         android:textColor="@color/red"
-                        android:text="Midfield"/>
+                        android:text="@string/midfield"/>
 
                     <TextView
                         android:id="@+id/awayMid"
@@ -315,7 +317,7 @@
                         android:layout_weight="1"
                         android:textAlignment="center"
                         android:textColor="@color/red"
-                        android:text="Forward"/>
+                        android:text="@string/forward"/>
 
                     <TextView
                         android:id="@+id/awayFwd"
@@ -347,7 +349,7 @@
                         android:layout_weight="1"
                         android:textAlignment="center"
                         android:textColor="@color/red"
-                        android:text="Substitutes"/>
+                        android:text="@string/substitutes"/>
 
                     <TextView
                         android:id="@+id/awaySubst"
@@ -362,7 +364,6 @@
             </LinearLayout>
 
         </ScrollView>
-
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
