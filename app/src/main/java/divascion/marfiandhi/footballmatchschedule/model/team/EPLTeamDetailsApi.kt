@@ -8,14 +8,6 @@ import divascion.marfiandhi.footballmatchschedule.BuildConfig
  */
 object EPLTeamDetailsApi {
     fun getDetails(target: String?): String {
-        return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("json")
-                .appendPath(BuildConfig.TSDB_API_KEY)
-                .appendPath("lookupteam.php")
-                .appendQueryParameter("id", target)
-                .build()
-                .toString()
+        return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookupteam.php?id=" + target
     }
 }

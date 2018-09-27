@@ -1,5 +1,6 @@
 package divascion.marfiandhi.footballmatchschedule.presenter
 
+import android.net.Uri
 import divascion.marfiandhi.footballmatchschedule.model.ApiRepository
 import divascion.marfiandhi.footballmatchschedule.model.team.EPLTeamDetailsApi
 import divascion.marfiandhi.footballmatchschedule.model.team.Team
@@ -10,7 +11,8 @@ import com.google.gson.Gson
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 /**
@@ -22,14 +24,14 @@ class EventDetailsPresenterTest {
         val teams: MutableList<Team> = mutableListOf()
         val response = TeamResponse(teams)
         val id = "1234"
-        Mockito.`when`(gson.fromJson(apiRepository
+        `when`(gson.fromJson(apiRepository
                 .doRequest(EPLTeamDetailsApi.getDetails(id)),
                 TeamResponse::class.java
         )).thenReturn(response)
         presenter.getDetails(id)
 
-        Mockito.verify(view).showTeamDetails(teams, id)
-        Mockito.verify(view).hideLoading()
+        verify(view).showTeamDetails(teams, "1234")
+        verify(view).hideLoading()
     }
     @Mock
     private
