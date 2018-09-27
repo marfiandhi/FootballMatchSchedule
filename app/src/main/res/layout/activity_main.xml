@@ -38,6 +38,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
+        android:id="@+id/linear_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:layout_marginRight="20dp"
