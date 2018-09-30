@@ -30,8 +30,8 @@ class MainAdapter(private val context: Context, private val events: List<Schedul
 
         @SuppressLint("SimpleDateFormat")
         fun bindItem(events: Schedule, listener: (Schedule) -> Unit) {
-            itemView.TeamA.text = events.home
-            itemView.TeamB.text = events.away
+            itemView.teamA.text = events.home
+            itemView.teamB.text = events.away
             if(events.homeScore!=null){
                 itemView.scoreTeamA.text = events.homeScore.toString()
                 itemView.scoreTeamB.text = events.awayScore.toString()

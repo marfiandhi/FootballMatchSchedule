@@ -26,8 +26,8 @@ class FavoriteEventsAdapter(private val context: Context, private val favorite: 
 
     class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun bindItem(favorite: Favorite, listener: (Favorite) -> Unit) {
-            itemView.TeamA.text = favorite.home
-            itemView.TeamB.text = favorite.away
+            itemView.teamA.text = favorite.home
+            itemView.teamB.text = favorite.away
             if(favorite.homeScore!="null"){
                 itemView.scoreTeamA.text = favorite.homeScore.toString()
                 itemView.scoreTeamB.text = favorite.awayScore.toString()
