@@ -71,6 +71,9 @@ data class Schedule (
         val idHome: String? = null,
 
         @SerializedName("idAwayTeam")
-        val idAway: String? = null
+        val idAway: String? = null,
+
+        @SerializedName("idEvent")
+        val idEvent: String? = null
 
 ) : Parcelable

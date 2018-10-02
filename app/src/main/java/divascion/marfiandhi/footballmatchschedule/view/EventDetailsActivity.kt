@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -44,8 +45,9 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
 
     private lateinit var presenter: EventDetailsPresenter
 
-    private var mHomeId: String = ""
-    private var mAwayId: String = ""
+    private lateinit var mHomeId: String
+    private lateinit var mAwayId: String
+    private lateinit var eventId: String
 
     private var check = true
 
@@ -63,6 +65,7 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
 
         if(check) {
             item = intent.getParcelableExtra("extra_item")
+            eventId = item.idEvent.toString()
             itemCache = item
 
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -82,38 +85,33 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
             awayName.text = item.away
 
             if(item.homeScore!=null){
-                homeScore.text = item.homeScore.toString()
-                homeGoals.text = item.homeGoalDetails
-                homeShots.text = item.homeShots.toString()+""
-                homeGK.text = item.homeGoalKeeper
-                homeDef.text = item.homeDefense
-                homeMid.text = item.homeMidfield
-                homeFwd.text = item.homeForward
-                homeSubst.text = item.homeSubstitutes
-
+                homeScore.text = item.homeScore.toString()+""
                 awayScore.text = item.awayScore.toString()+""
-                awayGoals.text = item.awayGoalDetails
-                awayShots.text = item.awayShots.toString()+""
-                awayGK.text = item.awayGoalKeeper
-                awayDef.text = item.awayDefense
-                awayMid.text = item.awayMidfield
-                awayFwd.text = item.awayForward
-                awaySubst.text = item.awaySubstitutes
-            }
+                if(!item.homeGoalKeeper.equals("null")) {
+                    homeGoals.text = item.homeGoalDetails
+                    homeGK.text = item.homeGoalKeeper
+                    homeDef.text = item.homeDefense
+                    homeMid.text = item.homeMidfield
+                    homeFwd.text = item.homeForward
+                    homeSubst.text = item.homeSubstitutes
 
-            val request = ApiRepository()
-            val gson = Gson()
-            presenter = EventDetailsPresenter(this, request, gson)
-            presenter.getDetails(mHomeId)
-
-            presenter.getDetails(mAwayId)
-
-            swipeRefresh.onRefresh {
-                presenter.getDetails(mHomeId)
-                presenter.getDetails(mAwayId)
+                    awayGoals.text = item.awayGoalDetails
+                    awayGK.text = item.awayGoalKeeper
+                    awayDef.text = item.awayDefense
+                    awayMid.text = item.awayMidfield
+                    awayFwd.text = item.awayForward
+                    awaySubst.text = item.awaySubstitutes
+                    if(item.awayShots!=null) {
+                        awayShots.text = item.awayShots.toString()
+                    }
+                    if(item.homeShots!=null) {
+                        homeShots.text = item.homeShots.toString()
+                    }
+                }
             }
         } else {
             itemFavorite = intent.getParcelableExtra("extra_item_favorite")
+            eventId = itemFavorite.eventId.toString()
             itemCacheFavorite = itemFavorite
 
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -132,49 +130,41 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
 
             if(itemFavorite.homeScore!="null"){
                 homeScore.text = itemFavorite.homeScore.toString()
-                homeGoals.text = itemFavorite.homeGoalDetails
-                homeShots.text = itemFavorite.homeShots.toString()+""
-                homeGK.text = itemFavorite.homeGoalKeeper
-                homeDef.text = itemFavorite.homeDefense
-                homeMid.text = itemFavorite.homeMidfield
-                homeFwd.text = itemFavorite.homeForward
-                homeSubst.text = itemFavorite.homeSubstitutes
+                awayScore.text = itemFavorite.awayScore.toString()
+                if(itemFavorite.homeGoalKeeper!="null") {
+                    homeGoals.text = itemFavorite.homeGoalDetails
+                    homeShots.text = itemFavorite.homeShots
+                    homeGK.text = itemFavorite.homeGoalKeeper
+                    homeDef.text = itemFavorite.homeDefense
+                    homeMid.text = itemFavorite.homeMidfield
+                    homeFwd.text = itemFavorite.homeForward
+                    homeSubst.text = itemFavorite.homeSubstitutes
 
-                awayScore.text = itemFavorite.awayScore.toString()+""
-                awayGoals.text = itemFavorite.awayGoalDetails
-                awayShots.text = itemFavorite.awayShots.toString()+""
-                awayGK.text = itemFavorite.awayGoalKeeper
-                awayDef.text = itemFavorite.awayDefense
-                awayMid.text = itemFavorite.awayMidfield
-                awayFwd.text = itemFavorite.awayForward
-                awaySubst.text = itemFavorite.awaySubstitutes
+                    awayGoals.text = itemFavorite.awayGoalDetails
+                    awayShots.text = itemFavorite.awayShots
+                    awayGK.text = itemFavorite.awayGoalKeeper
+                    awayDef.text = itemFavorite.awayDefense
+                    awayMid.text = itemFavorite.awayMidfield
+                    awayFwd.text = itemFavorite.awayForward
+                    awaySubst.text = itemFavorite.awaySubstitutes
+                }
             }
+        }
 
-            favoriteState()
+        favoriteState()
 
-            val request = ApiRepository()
-            val gson = Gson()
-            presenter = EventDetailsPresenter(this, request, gson)
+        val request = ApiRepository()
+        val gson = Gson()
+        presenter = EventDetailsPresenter(this, request, gson)
+        presenter.getDetails(mHomeId)
+
+        presenter.getDetails(mAwayId)
+
+        swipeRefresh.onRefresh {
             presenter.getDetails(mHomeId)
-
             presenter.getDetails(mAwayId)
-
-            swipeRefresh.onRefresh {
-                presenter.getDetails(mHomeId)
-                presenter.getDetails(mAwayId)
-            }
         }
 
-    }
-
-    private fun favoriteState(){
-        database.use {
-            val result = select(Favorite.TABLE_FAVORITE)
-                    .whereArgs("(HOME_ID = {id})",
-                            "id" to mHomeId)
-            val favorite = result.parseList(classParser<Favorite>())
-            if (!favorite.isEmpty()) isFavorite = true
-        }
     }
 
     override fun hideLoading() {
@@ -206,12 +196,24 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun favoriteState(){
+        database.use {
+            val result = select(Favorite.TABLE_FAVORITE)
+                    .whereArgs("(EVENT_ID = {id})",
+                            "id" to eventId)
+            val favorite = result.parseList(classParser<Favorite>())
+            if (!favorite.isEmpty()) isFavorite = true
+        }
+    }
+
     @SuppressLint("SimpleDateFormat")
     private fun addToFavorite(){
         try {
             if(check) {
                 database.use {
                     insert(Favorite.TABLE_FAVORITE,
+                            Favorite.EVENT_ID to itemCache.idEvent.toString(),
                             Favorite.HOME_ID to itemCache.idHome.toString(),
                             Favorite.HOME_NAME to itemCache.home.toString(),
                             Favorite.HOME_SCORE to itemCache.homeScore.toString(),
@@ -237,6 +239,7 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
             } else {
                 database.use {
                     insert(Favorite.TABLE_FAVORITE,
+                            Favorite.EVENT_ID to itemCache.idEvent.toString(),
                             Favorite.HOME_ID to itemCacheFavorite.idHome.toString(),
                             Favorite.HOME_NAME to itemCacheFavorite.home.toString(),
                             Favorite.HOME_SCORE to itemCacheFavorite.homeScore.toString(),
@@ -269,7 +272,8 @@ class EventDetailsActivity: AppCompatActivity(), EventDetailsView {
     private fun removeFromFavorite(){
         try {
             database.use {
-                delete(Favorite.TABLE_FAVORITE, "(HOME_ID = {id})","id" to mHomeId)
+                delete(Favorite.TABLE_FAVORITE, "(EVENT_ID = {id})",
+                        "id" to eventId)
             }
             snackbar(swipeRefresh, "Removed from favorite").show()
         } catch (e: SQLiteConstraintException){

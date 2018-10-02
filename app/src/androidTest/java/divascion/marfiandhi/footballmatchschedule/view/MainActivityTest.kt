@@ -9,7 +9,6 @@ import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import divascion.marfiandhi.footballmatchschedule.R.id.*
 import kotlinx.android.synthetic.main.item_list.*
 import org.junit.Rule

@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
  * Created by Marfiandhi on 9/21/2018.
  */
 @Parcelize
-data class Favorite(val id: Long?, val idHome: String?, val home: String?, val homeScore: String?, val idAway: String?,
+data class Favorite(val id: Long?, val eventId: String?, val idHome: String?, val home: String?, val homeScore: String?, val idAway: String?,
                     val away: String?, val awayScore: String?, val date: String?, val homeGoalDetails: String?,
                     val awayGoalDetails: String?, val homeShots: String?, val awayShots: String?, val homeGoalKeeper: String?,
                     val homeDefense: String?, val homeMidfield: String?, val homeForward: String?, val homeSubstitutes: String?,
@@ -17,6 +17,7 @@ data class Favorite(val id: Long?, val idHome: String?, val home: String?, val h
     companion object {
         const val TABLE_FAVORITE: String = "TABLE_FAVORITE"
         const val ID: String = "ID_"
+        const val EVENT_ID: String = "EVENT_ID"
         const val HOME_ID: String = "HOME_ID"
         const val HOME_NAME: String = "HOME_NAME"
         const val HOME_SCORE: String = "HOME_SCORE"
