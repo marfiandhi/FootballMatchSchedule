@@ -1,8 +1,8 @@
 package divascion.marfiandhi.footballmatchschedule.view
 
 import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.Espresso.pressBack
 import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.swipeDown
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers.*
@@ -10,7 +10,6 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
 import divascion.marfiandhi.footballmatchschedule.R.id.*
-import kotlinx.android.synthetic.main.item_list.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,7 +34,7 @@ class MainActivityTest {
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(11, click()))
     }
 
-    @Test
+    /*@Test
     fun testAppBehaviourPrevMatch() {
         sleep(5000)
 
@@ -103,6 +102,41 @@ class MainActivityTest {
         onView(withId(favorite)).perform(click())
 
         sleep(1000)
+    }*/
+    @Test
+    fun testBottomNavBehaviour() {
+        onView(withId(nextMatch)).perform(click())
+        //assertEquals(expectPrev, actualPrev)
+
+        onView(withId(mainSwipeRefresh)).perform(swipeDown())
+        //TODO tambahkan verify method presenter, code ada di testEventDetailActivity
+    }
+
+    @Test
+    fun testEventDetailsActivity() {
+        onView(withId(mainSwipeRefresh)).perform(swipeDown())
+
+        //TODO tambahkan verify method insert database dan delete database, edit di bawah
+        /*val adapter = activityTestRule.activity
+                .find<RecyclerView>(R.id.reviewsList)
+                .adapter as FlexibleAdapter<ReviewItem>
+
+        assertNotNull(adapter)
+
+        val spy = spy(adapter)
+
+        activityTestRule.activity
+                .runOnUiThread {
+                    activityTestRule.activity
+                            .find<RecyclerView>(R.id.reviewsList)
+                            .adapter = spy
+                }
+
+        doNothing().`when`(spy).updateDataSet(ArgumentMatchers.any())
+
+        onView(withId(R.id.swipeRefresh)).perform(ViewActions.swipeDown())
+
+        verify(spy, times(1)).updateDataSet(MOCKED_REVIEWS_FROM_SERVER.map(::ReviewItem))*/
     }
 
 }

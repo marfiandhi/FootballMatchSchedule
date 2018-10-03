@@ -43,93 +43,100 @@ class MainActivity : AppCompatActivity(), MainView {
     private val pastEvents = "eventspastleague.php"
     private lateinit var presenterEvents: String
 
-       override fun onCreate(savedInstanceState: Bundle?) {
-           super.onCreate(savedInstanceState)
-           setContentView(R.layout.activity_main)
-           swipeRefresh = mainSwipeRefresh
+    var testPresenter: Unit? = null
 
-           recycler = findViewById(R.id.recycler)
-           recycler.layoutManager = LinearLayoutManager(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        swipeRefresh = mainSwipeRefresh
 
-           adapter = MainAdapter(this, events) {
-               startActivity(intentFor<EventDetailsActivity>(
-                       "extra_item" to it,
-                       "boolean" to true))
-               intent.clearTask()
-           }
+        recycler = findViewById(R.id.recycler)
+        recycler.layoutManager = LinearLayoutManager(this)
+        adapter = MainAdapter(this, events) {
+            startActivity(intentFor<EventDetailsActivity>(
+                    "extra_item" to it,
+                    "boolean" to true))
+            intent.clearTask()
+        }
 
-           adapterFavorite = FavoriteEventsAdapter(this, favorites) {
-               startActivity(intentFor<EventDetailsActivity>(
-                       "extra_item_favorite" to it,
-                       "boolean" to false))
-               intent.clearTask()
-           }
+       adapterFavorite = FavoriteEventsAdapter(this, favorites) {
+           startActivity(intentFor<EventDetailsActivity>(
+                   "extra_item_favorite" to it,
+                   "boolean" to false))
+           intent.clearTask()
+       }
 
-           recycler.adapter = adapter
+       recycler.adapter = adapter
 
-           val request = ApiRepository()
-           val gson = Gson()
-           presenter = MainPresenter(this, request, gson)
+       val request = ApiRepository()
+       val gson = Gson()
+       presenter = MainPresenter(this, request, gson)
+       presenterEvents = pastEvents
+       presenter.getSchedule(presenterEvents)
+
+       testPresenter = presenter.getSchedule(presenterEvents)
+
+       prevMatch.setOnClickListener{
+           txtPrevMatch.setTextColor(Color.parseColor("#c90000"))
+           txtPrevMatch.textSize = 12F
+           txtNextMatch.setTextColor(Color.parseColor("#000000"))
+           txtNextMatch.textSize = 8F
+           imgPrevMatch.setColorFilter(ContextCompat.getColor(this, R.color.red))
+           imgNextMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
+           imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.black))
+           txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.black))
+           txtFavorite.textSize = 8f
            presenterEvents = pastEvents
+           recycler.adapter = adapter
+           checkFavorite = false
            presenter.getSchedule(presenterEvents)
 
-           prevMatch.setOnClickListener{
-               txtPrevMatch.setTextColor(Color.parseColor("#c90000"))
-               txtPrevMatch.textSize = 12F
-               txtNextMatch.setTextColor(Color.parseColor("#000000"))
-               txtNextMatch.textSize = 8F
-               imgPrevMatch.setColorFilter(ContextCompat.getColor(this, R.color.red))
-               imgNextMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
-               imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.black))
-               txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.black))
-               txtFavorite.textSize = 8f
-               presenterEvents = pastEvents
-               recycler.adapter = adapter
-               checkFavorite = false
-               presenter.getSchedule(presenterEvents)
-           }
+           testPresenter = presenter.getSchedule(presenterEvents)
+       }
 
-           nextMatch.setOnClickListener{
-               txtNextMatch.setTextColor(Color.parseColor("#c90000"))
-               txtNextMatch.textSize = 12F
-               txtPrevMatch.setTextColor(Color.parseColor("#000000"))
-               txtPrevMatch.textSize = 8F
-               imgNextMatch.setColorFilter(ContextCompat.getColor(this, R.color.red))
-               imgPrevMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
-               imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.black))
-               txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.black))
-               txtFavorite.textSize = 8f
-               presenterEvents = nextEvents
-               recycler.adapter = adapter
-               checkFavorite = false
-               presenter.getSchedule(presenterEvents)
-           }
+       nextMatch.setOnClickListener{
+           txtNextMatch.setTextColor(Color.parseColor("#c90000"))
+           txtNextMatch.textSize = 12F
+           txtPrevMatch.setTextColor(Color.parseColor("#000000"))
+           txtPrevMatch.textSize = 8F
+           imgNextMatch.setColorFilter(ContextCompat.getColor(this, R.color.red))
+           imgPrevMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
+           imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.black))
+           txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.black))
+           txtFavorite.textSize = 8f
+           presenterEvents = nextEvents
+           recycler.adapter = adapter
+           checkFavorite = false
+           presenter.getSchedule(presenterEvents)
 
-           favorite.setOnClickListener{
-               txtPrevMatch.setTextColor(Color.parseColor("#000000"))
-               txtPrevMatch.textSize = 8F
-               txtNextMatch.setTextColor(Color.parseColor("#000000"))
-               txtNextMatch.textSize = 8F
-               imgPrevMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
-               imgNextMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
-               imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.red))
-               txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.red))
-               txtFavorite.textSize = 12f
+           testPresenter = presenter.getSchedule(presenterEvents)
+       }
+
+       favorite.setOnClickListener{
+           txtPrevMatch.setTextColor(Color.parseColor("#000000"))
+           txtPrevMatch.textSize = 8F
+           txtNextMatch.setTextColor(Color.parseColor("#000000"))
+           txtNextMatch.textSize = 8F
+           imgPrevMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
+           imgNextMatch.setColorFilter(ContextCompat.getColor(this, R.color.black))
+           imgFavorite.setColorFilter(ContextCompat.getColor(this, R.color.red))
+           txtFavorite.setTextColor(ContextCompat.getColor(this, R.color.red))
+           txtFavorite.textSize = 12f
+           recycler.adapter = adapterFavorite
+           checkFavorite = true
+           favorites.clear()
+           showFavorite()
+       }
+
+       swipeRefresh.onRefresh {
+           if(checkFavorite) {
                recycler.adapter = adapterFavorite
-               checkFavorite = true
                favorites.clear()
                showFavorite()
+           } else {
+               presenter.getSchedule(presenterEvents)
            }
-
-           swipeRefresh.onRefresh {
-               if(checkFavorite) {
-                   recycler.adapter = adapterFavorite
-                   favorites.clear()
-                   showFavorite()
-               } else {
-                   presenter.getSchedule(presenterEvents)
-               }
-           }
+       }
     }
 
     override fun showLoading() {
