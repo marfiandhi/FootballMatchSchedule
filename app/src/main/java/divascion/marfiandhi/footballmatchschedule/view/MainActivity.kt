@@ -43,8 +43,6 @@ class MainActivity : AppCompatActivity(), MainView {
     private val pastEvents = "eventspastleague.php"
     private lateinit var presenterEvents: String
 
-    var testPresenter: Unit? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -74,8 +72,6 @@ class MainActivity : AppCompatActivity(), MainView {
        presenterEvents = pastEvents
        presenter.getSchedule(presenterEvents)
 
-       testPresenter = presenter.getSchedule(presenterEvents)
-
        prevMatch.setOnClickListener{
            txtPrevMatch.setTextColor(Color.parseColor("#c90000"))
            txtPrevMatch.textSize = 12F
@@ -90,8 +86,6 @@ class MainActivity : AppCompatActivity(), MainView {
            recycler.adapter = adapter
            checkFavorite = false
            presenter.getSchedule(presenterEvents)
-
-           testPresenter = presenter.getSchedule(presenterEvents)
        }
 
        nextMatch.setOnClickListener{
@@ -108,8 +102,6 @@ class MainActivity : AppCompatActivity(), MainView {
            recycler.adapter = adapter
            checkFavorite = false
            presenter.getSchedule(presenterEvents)
-
-           testPresenter = presenter.getSchedule(presenterEvents)
        }
 
        favorite.setOnClickListener{

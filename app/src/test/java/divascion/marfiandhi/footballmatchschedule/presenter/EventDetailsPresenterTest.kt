@@ -1,6 +1,5 @@
 package divascion.marfiandhi.footballmatchschedule.presenter
 
-import android.net.Uri
 import divascion.marfiandhi.footballmatchschedule.model.ApiRepository
 import divascion.marfiandhi.footballmatchschedule.model.team.EPLTeamDetailsApi
 import divascion.marfiandhi.footballmatchschedule.model.team.Team

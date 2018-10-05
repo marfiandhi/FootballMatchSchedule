@@ -32,7 +32,6 @@ class MainPresenterTest {
         verify(view).showLoading()
         verify(view).showSchedule(events)
         verify(view).hideLoading()
-
     }
 
     @Mock
